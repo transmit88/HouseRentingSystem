@@ -21,6 +21,10 @@ if (app.Environment.IsDevelopment())
 {
     app.UseMigrationsEndPoint();
 }
+if (app.Environment.IsDevelopment())
+{
+    app.UseMigrationsEndPoint();
+}
 else
 {
     app.UseExceptionHandler("/Home/Error");
