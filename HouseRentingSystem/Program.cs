@@ -1,4 +1,4 @@
-using HouseRentingSystem.Data;
+using HouseRentingSystem.Infrastructure.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -19,16 +19,13 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseMigrationsEndPoint();
+    app.UseDeveloperExceptionPage();
+    //app.UseMigrationsEndPoint(); 
 }
-if (app.Environment.IsDevelopment())
-{
-    app.UseMigrationsEndPoint();
-}
+
 else
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
