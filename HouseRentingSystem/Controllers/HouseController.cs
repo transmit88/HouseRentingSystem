@@ -1,6 +1,7 @@
 ﻿using HouseRentingSystem.Core.Contracts;
 using HouseRentingSystem.Core.Models.House;
 using HouseRentingSystem.Extension;
+using HouseRentingSystem.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,13 +22,22 @@ namespace HouseRentingSystem.Controllers
             agentService = _agentService;
         }
 
-
+        [HttpGet]
         [AllowAnonymous]
-        public async Task<IActionResult> All()
+        public async Task<IActionResult> All([FromQuery]AllHousesQueryModel query)
         {
-            var model = new HousesQueryModel();
+            var result = await houseService.All(
+                query.Category,
+                query.SearchTerm,
+                query.Sorting,
+                query.CurrentPage,
+                AllHousesQueryModel.HousesPerPage);
 
-            return View(model);
+            query.TotalHousesCount = result.TotalHousesCount;
+            query.Categories = await houseService.AllCategoriesNames();
+            query.Houses = result.Houses;
+
+            return View(query);
         }
 
         
